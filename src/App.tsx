@@ -3,6 +3,7 @@ import { AnimatePresence } from 'framer-motion';
 import { ToastContainer } from 'react-toastify';
 import { AuthProvider } from './context/AuthContext';
 import { CartProvider } from './context/CartContext';
+import { useLenis } from './hooks/useLenis';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import ProtectedRoute from './components/ProtectedRoute';
@@ -51,6 +52,8 @@ function AnimatedRoutes() {
 }
 
 export default function App() {
+  useLenis();
+
   return (
     <AuthProvider>
       <CartProvider>

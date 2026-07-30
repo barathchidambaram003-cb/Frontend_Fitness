@@ -8,6 +8,8 @@ import PageTransition from '../../components/PageTransition';
 import { productsApi } from '../../api/products.api';
 import type { Product } from '../../types';
 
+const easeOutExpo = [0.16, 1, 0.3, 1] as const;
+
 export default function Home() {
   const [featured, setFeatured] = useState<Product[]>([]);
 
@@ -21,7 +23,7 @@ export default function Home() {
       <section
         className="text-white d-flex align-items-center"
         style={{
-          minHeight: '80vh',
+          minHeight: '85vh',
           background:
             'linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.6)), url(https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1600) center/cover',
         }}
@@ -30,25 +32,25 @@ export default function Home() {
           <Row>
             <Col md={7}>
               <motion.h1
-                initial={{ opacity: 0, x: -40 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.6 }}
+                initial={{ opacity: 0, y: 24 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, ease: easeOutExpo }}
                 className="display-3 fw-bold"
               >
                 Train hard. Recover smart.
               </motion.h1>
               <motion.p
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.3, duration: 0.6 }}
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.15, duration: 0.8, ease: easeOutExpo }}
                 className="lead mb-4"
               >
                 Premium equipment and clean supplements — everything you need to hit your goals.
               </motion.p>
               <motion.div
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.5 }}
+                transition={{ delay: 0.3, duration: 0.8, ease: easeOutExpo }}
               >
                 <Button as={Link as any} to="/shop" variant="light" size="lg" className="me-3">
                   Shop now
@@ -63,7 +65,7 @@ export default function Home() {
       </section>
 
       {/* Category strip */}
-      <Container className="py-5">
+      <Container className="py-5 my-4">
         <Row className="g-4">
           {[
             { icon: <FaDumbbell size={36} />, title: 'Gym equipment', text: 'Dumbbells, barbells, benches' },
@@ -72,10 +74,10 @@ export default function Home() {
           ].map((f, i) => (
             <Col md={4} key={i}>
               <motion.div
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 40 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
+                viewport={{ once: true, margin: '-80px' }}
+                transition={{ duration: 0.7, delay: i * 0.1, ease: easeOutExpo }}
                 className="text-center p-4 border rounded shadow-sm h-100"
               >
                 <div className="text-primary mb-3">{f.icon}</div>
@@ -88,15 +90,28 @@ export default function Home() {
       </Container>
 
       {/* Featured products */}
-      <Container className="pb-5">
-        <div className="d-flex justify-content-between align-items-center mb-4">
+      <Container className="py-5 my-4">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-80px' }}
+          transition={{ duration: 0.6, ease: easeOutExpo }}
+          className="d-flex justify-content-between align-items-center mb-4"
+        >
           <h2 className="fw-bold mb-0">Featured products</h2>
           <Link to="/shop" className="text-decoration-none">View all →</Link>
-        </div>
+        </motion.div>
         <Row className="g-4">
-          {featured.map((p) => (
+          {featured.map((p, i) => (
             <Col key={p.id} md={6} lg={3}>
-              <ProductCard product={p} />
+              <motion.div
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-80px' }}
+                transition={{ duration: 0.6, delay: i * 0.08, ease: easeOutExpo }}
+              >
+                <ProductCard product={p} />
+              </motion.div>
             </Col>
           ))}
         </Row>
